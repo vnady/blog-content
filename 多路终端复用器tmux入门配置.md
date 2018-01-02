@@ -4,7 +4,7 @@ Tags: tmux,linux,terminal,vim
 category: linux,dev-tools
 ---
 
-tmux 是一个优秀的终端复用软件，类似 GNU Screen ，但来自于 OpenBSD ，采用 BSD 授权。使用它最直观的好处就是，通过一个终端登录远程主机并运行 tmux 后，在其中可以开启多个控制台而无需再“浪费”多余的终端来连接这台远程主机；当然其功能远不止于此。 [ from 百度百科]
+[tmux](http://tmux.github.io/) 是一个优秀的终端复用软件，类似 GNU Screen ，但来自于 OpenBSD ，采用 BSD 授权。使用它最直观的好处就是，通过一个终端登录远程主机并运行 tmux 后，在其中可以开启多个控制台而无需再“浪费”多余的终端来连接这台远程主机；当然其功能远不止于此。 [[百度百科介绍]](http://baike.baidu.com/link?url=jND2oVyLUFsGLIWBXU9sIeH7c_nrjyTM6Sns8DleW3EnuL4t8ewBA0-WmTFQdF_1HdsMbU9iw3__2HKuL6mnBa)
 
 我的配置文件主要进行如下定制：
 
@@ -14,19 +14,19 @@ tmux 是一个优秀的终端复用软件，类似 GNU Screen ，但来自于 Op
 
 - 窗格选择移动键与 vim 移动键一致
 
-- 窗格尺寸调整，边界移动键 GHJK （与 vim 移动键一致，只是变成大写）
+- 窗格尺寸调整，边界移动键 GHJK (与 vim 移动键一致，只是变成大写) （<font color="red" size=3>已删除，鼠标调整大小更方便</font>）
 
 - 状态栏设置
 
 - 使能鼠标操作
 
-<strong>配置文件.tmux.conf</strong>
+<strong>配置文件   .tmux.conf</strong>
 ```
 
 unbind C-b
 set -g prefix C-a
 bind-key C-a send-prefix
-bind r source-file ~/.tmux.conf \; display "Reloaded configure file!"
+bind r source-file ~/.tmux.conf \; display "`Reloaded configure file!"
 setw -g mode-keys vi
 set -g default-terminal "screen-256color"
 
@@ -44,7 +44,7 @@ bind j selectp -D # below (prefix j)
 bind h selectp -L # left (prefix h)
 bind l selectp -R # right (prefix l)
 
-# resize pane
+# resize pane（已删除，鼠标调整大小更方便）
 bind -r K resizep -U 10 # upward (prefix Ctrl+k)
 bind -r J resizep -D 10 # downward (prefix Ctrl+j)
 bind -r H resizep -L 10 # to the left (prefix Ctrl+h)
@@ -74,3 +74,20 @@ set -g mouse on
 
 
 接下来会继续探索一个init.sh脚本用于一条命令准备好工作环境。欢迎交流！
+
+***
+
+<font color="blue"> 2016-12-09 16:04:19 为了添加鼠标scroll，我在.tmux.conf中添加如下两行：</font>
+
+
+```
+bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
+bind -n WheelDownPane select-pane -t= \; send-keys -M
+```
+
+- 插件推荐
+> TPM 插件管理工具，安装使用说明见下面github列表
+>
+> tmux-resurrect 会话保存恢复工具，很方便，安装使用说明见下面github列表
+
+[Github插件列表...](https://github.com/tmux-plugins)

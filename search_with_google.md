@@ -1,6 +1,7 @@
 title: The way to access Google in China
 date: 2014-9-11
-category: misc
+Tags: 分享
+category: share
 
 ### alternative offer ###
 Google:
